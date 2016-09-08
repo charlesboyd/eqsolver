@@ -27,9 +27,13 @@ function isNumericString(str){
     return !isNaN(str) && str.length > 0;
 }
 
+function isLetterChar(str) {
+    return str.match(/[a-z]/i)!==null;
+}
+
 function isOpToken(str){
     var opTokens = ['+', '-', '*', '/', '&', '|', '=', '~', '!'];
-    return opTokens.indexOf(str)!==false;
+    return opTokens.indexOf(str)!==-1;
 }
 
 ///----- start ----
@@ -105,6 +109,8 @@ function evaluate(expression){
             continue;
         }
 
+        //console.log(tokens.charAt(i));
+        
         // Current token is a number, push it to stack for numbers
         if(isNumericString(tokens.charAt(i))){
             var tempstring = '';
@@ -148,6 +154,8 @@ function evaluate(expression){
 
             // Push current token to 'ops'.
             ops.push(tokens.charAt(i));
+        }else if(isLetterChar(tokens.charAt(i))){
+            values.push(varLookup(tokens.charAt(i)));
         }
         
     }
@@ -169,8 +177,49 @@ function printEval(ex){
     console.log("Result: " + result);
 }
 
+var varStore = {
+    T: 1,
+    F: 0
+};
 
-printEval("(5+1)*3");
+function varLookup(varLetter){
+    if(typeof(varLetter)!=='string' || varLetter.length!==1){
+        return false;
+    }
+    varLetter = varLetter.toUpperCase();
+    if(varStore[varLetter]!==undefined){
+        return varStore[varLetter];
+    }else{
+        return 0;
+    }
+}
+
+function setVar(varLetter, value){
+    if(typeof(varLetter)!=='string' || varLetter.length!==1){
+        throw new TypeError("varLetter must be a single letter A-Z");
+    }
+    if(value==='T' || value==='t'){
+        value = 1;
+    }
+    if(value==='F' || value==='f'){
+        value = 0;
+    }
+    if(typeof(value)!=='number'){
+        throw new TypeError("Value must be a number or either T or F");
+    }
+    varLetter = varLetter.toUpperCase();
+    varStore[varLetter] = value;
+    return true;
+}
+
+function printVarStore(){
+    console.log(varStore);
+}
+
+setVar('A', 3);
+printEval("(1&~1)|A");
+
+//printVarStore();
 
 console.log("------------------");
 console.log("END");
