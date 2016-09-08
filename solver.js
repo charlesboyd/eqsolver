@@ -161,12 +161,6 @@ function printEval(ex){
 
 
 printEval("(5+1)*3");
-printEval("1 & 1");
-printEval("1 & 0");
-printEval("1 | 0");
-printEval("1 | 1");
-printEval("0 | 0");
-printEval("0 | 5");
 
 console.log("------------------");
 console.log("END");
