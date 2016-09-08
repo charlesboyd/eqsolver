@@ -1,6 +1,16 @@
-console.log("Init");
+console.log("INIT");
 
-var expression = "(5+1)*3";
+/*
+For logcial expressions, use the following:
+& - and
+| - or
+> - conditional
+= - biconditional
+~ - not
+! - not
+
+Note that only 0 evaluates to false, all other values (including 1) evaluate to true (output as the value 1).
+*/
 
 Array.prototype.peek = function(){
     if(this.length<1){
@@ -18,7 +28,8 @@ function isNumericString(str){
 }
 
 function isOpToken(str){
-    return str==='+' || str==='-' || str==='*' || str==='/';
+    var opTokens = ['+', '-', '*', '/', '&', '|', '=', '~', '!'];
+    return opTokens.indexOf(str)!==false;
 }
 
 ///----- start ----
@@ -38,6 +49,14 @@ function hasPrecedence(/*char*/ op1, /*char*/ op2){
     }
 }
 
+function boolToInt(boolVal){
+    if(boolVal){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 // A utility method to apply an operator 'op' on operands 'a' 
 // and 'b'. Return the result.
 function applyOp(/* char */ op, /*int*/ b, /*int*/ a){
@@ -54,6 +73,12 @@ function applyOp(/* char */ op, /*int*/ b, /*int*/ a){
             }else{
                 return a / b;
             }
+        case '&':
+            return boolToInt(a!==0 && b!==0);
+        case '|': 
+            return boolToInt(a!==0 || b!==0);
+        case '~': 
+            return boolToInt(b!==0);
     }
     return 0;
 }
@@ -127,8 +152,20 @@ function evaluate(expression){
     return values.pop();
 }
 
+function printEval(ex){
+    console.log("------------------");
+    console.log("Expression: " + ex);
+    var result = evaluate(ex);
+    console.log("Result: " + result);
+}
 
-console.log("Expression: " + expression);
-var result = evaluate(expression);
-console.log("Result: " + result);
-console.log("End");
+
+printEval("(5+1)*3");
+printEval("1 & 1");
+printEval("1 & 0");
+printEval("1 | 0");
+printEval("1 | 1");
+printEval("0 | 0");
+
+console.log("------------------");
+console.log("END");
