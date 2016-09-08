@@ -77,8 +77,13 @@ function applyOp(/* char */ op, /*int*/ b, /*int*/ a){
             return boolToInt(a!==0 && b!==0);
         case '|': 
             return boolToInt(a!==0 || b!==0);
-        case '~': 
-            return boolToInt(b!==0);
+        case '>': 
+            return boolToInt(a===0 || (a!==0 && b!==0));
+        case '=': 
+            return boolToInt((a===0 && b===0) || (a!==0 && b!==0));
+        case '~':
+        case '!':
+            return boolToInt(b===0);
     }
     return 0;
 }
@@ -129,6 +134,11 @@ function evaluate(expression){
 
         // Current token is an operator.
         else if (isOpToken(tokens.charAt(i))){
+            if(tokens.charAt(i)==='~' || tokens.charAt(i)==='!'){
+                //Push a dummy value onto the value stack so that it can be popped when the op is applied
+                values.push(0);
+            }
+            
             // While top of 'ops' has same or greater precedence to current
             // token, which is an operator. Apply operator on top of 'ops'
             // to top two elements in values stack
