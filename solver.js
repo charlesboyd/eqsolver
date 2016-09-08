@@ -216,8 +216,33 @@ function printVarStore(){
     console.log(varStore);
 }
 
+function ttPrintRow(A, B, ex){
+    setVar('A', A);
+    setVar('B', B);
+    var result = evaluate(ex);
+    console.log(A + "\t" + B + "\t| " + result);
+}
+
+function printTruthTable(ex){
+    //Assuming a and b for now
+    console.log("------------------");
+    console.log("");
+    console.log("Expression: " + ex);
+    console.log("");
+    console.log("A\tB\t| Result");
+    console.log("-\t-\t| -");
+    
+    ttPrintRow(0, 0, ex);
+    ttPrintRow(0, 1, ex);
+    ttPrintRow(1, 0, ex);
+    ttPrintRow(1, 1, ex);
+    console.log("");
+}
+
 setVar('A', 3);
 printEval("(1&~1)|A");
+
+printTruthTable("(1&~1)|A");
 
 //printVarStore();
 
