@@ -1,4 +1,8 @@
-console.log("INIT");
+function echo(str){
+    console.log(str);
+}
+
+echo("INIT");
 
 /*
 For logcial expressions, use the following:
@@ -109,7 +113,7 @@ function evaluate(expression){
             continue;
         }
 
-        //console.log(tokens.charAt(i));
+        //echo(tokens.charAt(i));
         
         // Current token is a number, push it to stack for numbers
         if(isNumericString(tokens.charAt(i))){
@@ -171,10 +175,10 @@ function evaluate(expression){
 }
 
 function printEval(ex){
-    console.log("------------------");
-    console.log("Expression: " + ex);
+    echo("------------------");
+    echo("Expression: " + ex);
     var result = evaluate(ex);
-    console.log("Result: " + result);
+    echo("Result: " + result);
 }
 
 var varStore = {
@@ -213,38 +217,93 @@ function setVar(varLetter, value){
 }
 
 function printVarStore(){
-    console.log(varStore);
+    echo(varStore);
 }
 
-function ttPrintRow(A, B, ex){
-    setVar('A', A);
-    setVar('B', B);
+function getListOfVars(ex){
+    var arr=[];
+    var i;
+    for(i=0; i<ex.length; i++){
+        var cchar = ex.charAt(i);
+        if(isLetterChar(cchar)){
+            if(arr.indexOf(cchar)===-1){
+                arr.push(cchar);
+            }
+        }
+    }
+    echo(arr);
+    return arr;
+}
+
+var div='  ';//Divider for the table
+
+function ttPrintRow(varList, varValues, ex){
+    /*setVar('A', A);
+    setVar('B', B);*/
+    
+    var i, varOutString="";
+    for(i=0; i<varList.length; i++){
+        setVar(varList[i], varValues[i]);
+        varOutString += varValues[i] + div;
+        
+    }
     var result = evaluate(ex);
-    console.log(A + "\t" + B + "\t| " + result);
+    echo(varOutString + '| ' + result);
+}
+
+function incVarValues(vv){
+    var i;
+    for(i=vv.length-1; i>=0; i--){
+        if(vv[i]===0){
+            vv[i]=1;
+            break;
+        }else{
+            vv[i]=0;
+        }
+    }
+    return vv;
 }
 
 function printTruthTable(ex){
+    var varList = getListOfVars(ex);
+    var numVars = varList.length;
+    var numttRows = Math.pow(2, numVars);
+    var varValues = [];
+    var headerRowOut = "";
+    var divRowOut = "";
+    var i;
+    for(i=0; i<numVars; i++){
+        varValues.push(0);
+        headerRowOut += varList[i]+div;
+        divRowOut += '-' + div;
+    }
     //Assuming a and b for now
-    console.log("------------------");
-    console.log("");
-    console.log("Expression: " + ex);
-    console.log("");
-    console.log("A\tB\t| Result");
-    console.log("-\t-\t| -");
+    echo('------------------');
+    echo('');
+    echo('Expression: ' + ex);
+    echo('');
+    echo(headerRowOut + '| Result');
+    echo(divRowOut + '| -');
     
+    for(i=0; i<numttRows; i++){
+        ttPrintRow(varList, varValues, ex);
+        varValues=incVarValues(varValues);
+    }
+    /*
     ttPrintRow(0, 0, ex);
     ttPrintRow(0, 1, ex);
     ttPrintRow(1, 0, ex);
-    ttPrintRow(1, 1, ex);
-    console.log("");
+    ttPrintRow(1, 1, ex);*/
+    echo("");
 }
 
-setVar('A', 3);
-printEval("(1&~1)|A");
+//setVar('A', 3);
+//printEval("(1&~1)|A");
 
-printTruthTable("(1&~1)|A");
+printTruthTable("(B&~1)|A");
+printTruthTable("A | (B & C) | H|E|L|L|O");
 
 //printVarStore();
 
-console.log("------------------");
-console.log("END");
+echo("------------------");
+echo("END");

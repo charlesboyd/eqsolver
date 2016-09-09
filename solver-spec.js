@@ -89,6 +89,19 @@ describe("Solver", function() {
 
 
     });
+    
+    describe("incVarValues()", function() {
+        var f = incVarValues;
+
+        it("should be a function", function() {
+            expect(typeof f).toEqual("function");
+        });
+        
+        it("should increment test 1", function() {
+            expect(f([0, 0, 1])).toEqual([0, 1, 0]);
+        });
+        
+    });
 
 });
 
