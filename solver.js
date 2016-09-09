@@ -1,8 +1,8 @@
-function echo(str){
+var echo = function(str){
     console.log(str);
-}
+};
 
-echo("INIT");
+console.log("INIT");
 
 /*
 For logcial expressions, use the following:
@@ -36,7 +36,7 @@ function isLetterChar(str) {
 }
 
 function isOpToken(str){
-    var opTokens = ['+', '-', '*', '/', '&', '|', '=', '~', '!'];
+    var opTokens = ['+', '-', '*', '/', '&', '|', '=', '~', '!', '^', '>'];
     return opTokens.indexOf(str)!==-1;
 }
 
@@ -81,13 +81,15 @@ function applyOp(/* char */ op, /*int*/ b, /*int*/ a){
             }else{
                 return a / b;
             }
+        case '^':
+            return Math.pow(a, b);
         case '&':
             return boolToInt(a!==0 && b!==0);
         case '|': 
             return boolToInt(a!==0 || b!==0);
-        case '>': 
+        case '>':
             return boolToInt(a===0 || (a!==0 && b!==0));
-        case '=': 
+        case '=':
             return boolToInt((a===0 && b===0) || (a!==0 && b!==0));
         case '~':
         case '!':
@@ -181,10 +183,16 @@ function printEval(ex){
     echo("Result: " + result);
 }
 
-var varStore = {
-    T: 1,
-    F: 0
-};
+var varStore;
+
+function resetVarStore(){
+    varStore = {
+        T: 1,
+        F: 0
+    };
+}
+
+resetVarStore();
 
 function varLookup(varLetter){
     if(typeof(varLetter)!=='string' || varLetter.length!==1){
@@ -231,20 +239,16 @@ function getListOfVars(ex){
             }
         }
     }
-    echo(arr);
     return arr;
 }
 
-var div='  ';//Divider for the table
+var ttdiv='  ';//Divider for the table
 
 function ttPrintRow(varList, varValues, ex){
-    /*setVar('A', A);
-    setVar('B', B);*/
-    
     var i, varOutString="";
     for(i=0; i<varList.length; i++){
         setVar(varList[i], varValues[i]);
-        varOutString += varValues[i] + div;
+        varOutString += varValues[i] + ttdiv;
         
     }
     var result = evaluate(ex);
@@ -271,14 +275,14 @@ function printTruthTable(ex){
     var varValues = [];
     var headerRowOut = "";
     var divRowOut = "";
+    
     var i;
     for(i=0; i<numVars; i++){
         varValues.push(0);
-        headerRowOut += varList[i]+div;
-        divRowOut += '-' + div;
+        headerRowOut += varList[i] + ttdiv;
+        divRowOut += '-' + ttdiv;
     }
-    //Assuming a and b for now
-    echo('------------------');
+
     echo('');
     echo('Expression: ' + ex);
     echo('');
@@ -289,21 +293,17 @@ function printTruthTable(ex){
         ttPrintRow(varList, varValues, ex);
         varValues=incVarValues(varValues);
     }
-    /*
-    ttPrintRow(0, 0, ex);
-    ttPrintRow(0, 1, ex);
-    ttPrintRow(1, 0, ex);
-    ttPrintRow(1, 1, ex);*/
-    echo("");
+
+    echo('');
+    resetVarStore();
 }
 
 //setVar('A', 3);
 //printEval("(1&~1)|A");
 
-printTruthTable("(B&~1)|A");
-printTruthTable("A | (B & C) | H|E|L|L|O");
+//printTruthTable("(B&~1)|A");
+//printTruthTable("A | (B & C) | H|E|L|L|O");
 
 //printVarStore();
 
-echo("------------------");
-echo("END");
+console.log("COMPLETE");
