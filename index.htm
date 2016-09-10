@@ -6,20 +6,20 @@
     <script src="solver.js"></script>
     
     <script>
-        echo = function(str){
+        solver.overrideEchoFunction(function(str){
             console.log(str);
             document.getElementById('output').innerHTML += str + '\n';
-        }
+        });
         
         doEval = function(){
             var ex = document.getElementById('input').value;
-            document.getElementById('output').innerHTML = evaluate(ex);
+            document.getElementById('output').innerHTML = solver.evaluate(ex);
         }
         
         doTT = function(){
             var ex = document.getElementById('input').value;
             document.getElementById('output').innerHTML = "";
-            printTruthTable(ex);
+            solver.printTruthTable(ex);
         }
         
     </script>
