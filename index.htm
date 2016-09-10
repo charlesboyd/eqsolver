@@ -14,43 +14,52 @@
         doEval = function(){
             var ex = document.getElementById('input').value;
             document.getElementById('output').innerHTML = solver.evaluate(ex);
-        }
+        };
         
         doTT = function(){
             var ex = document.getElementById('input').value;
             document.getElementById('output').innerHTML = "";
             solver.printTruthTable(ex);
+        };
+        
+        doAuto = function(){
+            var ex = document.getElementById('input').value;
+            document.getElementById('output').innerHTML = "";
+            solver.auto(ex);
+        };
+        
+        clear = function(){
+            document.getElementById('input').value="";
+            document.getElementById('output').innerHTML = "";
         }
         
     </script>
 </head>
 <body>
 
-    <p>Enter an equation or a logical expression</p>
-    <p style="white-space: pre; font-family: monospace;">For logcial expressions, use the following:
-        &amp; - and
-        | - or
-        > - conditional
-        = - biconditional
-        ~ - not
-        NOTE: Currently, the order of operations must be specified for all logical expressions by using parenthesis: e.g. use 1 | (~0) instead of 1 | ~0.</p>
-    <input id="input" name="input" type="text" value="A | (1 & B)" style="width: 50%;"/>
+    <p>Enter an equation or a logical expression. <a href="readme.txt">Help/Details/Info</a></p>
+    <input id="input" name="input" type="text" value="" style="width: 50%;"/>
     <button onclick="doEval();">Evaluate</button>
     <button onclick="doTT();">Print Truth Table</button>
-    <button onclick="location.reload();">Reset</button>
+    <button onclick="location.clear();">Clear</button>
+    
     <br/>
     <hr/>
+    
     <p id="output" style="white-space: pre; font-family: monospace;"></p>
 
     <script>
+       //Bind to the return/enter key
         document.getElementById("input").addEventListener("keyup", function(event) {
             event.preventDefault();
             if (event.keyCode == 13) {
-                doEval();
+                doAuto();
             }
         });
         
-        doTT();
+        //Default for page load
+        document.getElementById('input').value = 'A | (1 & B)';
+        doAuto();
     </script>
     
 </body>

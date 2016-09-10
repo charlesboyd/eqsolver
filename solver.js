@@ -6,43 +6,9 @@
     Portions adapted from geeksforgeeks.org/expression-evaluation
     
     Can be used as a node.js script or included in a webpage.
+   
+   See readme.txt for more info.
     
-    For equations, use the following:
-    +   add
-    -   subtract
-    *   multiply
-    /   divide
-    ^   raise to a power
-    
-    For logcial expressions, use the following:
-    &   and
-    |   or
-    >   conditional
-    =   biconditional/equivalent
-    ~   not
-    !   not
-    
-    Parenthesis such as () may be used for grouping.
-    
-    A value of zero (0) is assumed to be false. All others are assumed to be true. Truthy output from this script will be represented by a value of one (1).
-    
-    Variables A to Z may be included for truth table printing.
-    
-    For solver.valuate(), all variables A to Z (except T) are assumed to have a value of zero (0) unless otherwise specified. The variable T is given a default value of one (1) and the variable F is given a default value of zero (0).
-    
-    The solver.auto() will evalute the experession provided (if it is valid), unless a variable besides T or F is provided, in which case it will print a truth table for the expression.
-    
-    Currently, the order of operations must be specified for all logical expressions by using parenthesis: e.g. use 1 | (~0) instead of 1 | ~0.
-    
-*/
-
-
-console.log("INIT");
-
-/*
-
-
-Note that only 0 evaluates to false, all other values (including 1) evaluate to true (output as the value 1).
 */
 
 Array.prototype.peek = function(){
@@ -71,7 +37,12 @@ var solver = (function(){
     }
     
     function isValidEx(ex){
-        //TODO
+        if(typeof(ex)!=='string'){
+            return false;
+        }
+        
+        //TODO!
+        
         return true;
     }
     
@@ -359,8 +330,23 @@ var solver = (function(){
     
     function auto(ex){
         checkValidEx(ex);
-        //TODO
-        evaluate(ex);
+        var containsVars = false;
+        var i;
+        for(i=0; i<ex.length; i++){
+            var c = ex.charAt(i);
+            if(isLetterChar(c) && c!=='T' && c!=='F'){
+                containsVars = true;
+                break;
+            }
+        }
+        if(containsVars){
+            printTruthTable(ex);
+        }else{
+            var result = evaluate(ex);
+            echo(result);
+            return result;
+        }
+        return true;
     }
     
     return {
@@ -380,13 +366,7 @@ var solver = (function(){
 }());
 
 
-
-//setVar('A', 3);
-//printEval("(1&~1)|A");
-
-//printTruthTable("(B&~1)|A");
-//printTruthTable("A | (B & C) | H|E|L|L|O");
-
-//printVarStore();
-
-console.log("COMPLETE");
+/* e.g.
+    solver.printTruthTable("(B&~1)|A");
+    solver.printTruthTable("A | (B & C) | H|E|L|L|O");
+*/
