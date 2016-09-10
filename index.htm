@@ -28,10 +28,10 @@
             solver.auto(ex);
         };
         
-        clear = function(){
+        clearPage = function(){
             document.getElementById('input').value="";
             document.getElementById('output').innerHTML = "";
-        }
+        };
         
     </script>
 </head>
@@ -41,7 +41,7 @@
     <input id="input" name="input" type="text" value="" style="width: 50%;"/>
     <button onclick="doEval();">Evaluate</button>
     <button onclick="doTT();">Print Truth Table</button>
-    <button onclick="location.clear();">Clear</button>
+    <button onclick="clearPage();">Clear</button>
     
     <br/>
     <hr/>

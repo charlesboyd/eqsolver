@@ -120,6 +120,7 @@ var solver = (function(){
         for(i=0; i<ex.length; i++){
             var cchar = ex.charAt(i);
             if(isLetterChar(cchar)){
+                cchar = cchar.toUpperCase();
                 if(arr.indexOf(cchar)===-1){
                     arr.push(cchar);
                 }
@@ -364,6 +365,8 @@ var solver = (function(){
         }
     };
 }());
+
+
 
 
 /* e.g.
