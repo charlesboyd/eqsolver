@@ -1,3 +1,36 @@
+/* 
+    solver.js
+    
+    By Charles Boyd <charlesboyd.me>
+    
+    Portions adapted from geeksforgeeks.org/expression-evaluation
+    
+    Can be used as a node.js script or included in a webpage.
+    
+    For equations, use the following:
+    +   add
+    -   subtract
+    *   multiply
+    /   divide
+    ^   raise to a power
+    
+    For logcial expressions, use the following:
+    &   and
+    |   or
+    >   conditional
+    =   biconditional/equivalent
+    ~   not
+    !   not
+    
+    Parenthesis () may be used for grouping.
+    
+    Variables A to Z may be included for truth table printing.
+    
+    A value of zero (0) is assumed to be false. All others are assumed to be true. Truthy output from this script will be represented by a value of one (1).
+    
+*/
+
+
 var echo = function(str){
     console.log(str);
 };
@@ -5,13 +38,7 @@ var echo = function(str){
 console.log("INIT");
 
 /*
-For logcial expressions, use the following:
-& - and
-| - or
-> - conditional
-= - biconditional
-~ - not
-! - not
+
 
 Note that only 0 evaluates to false, all other values (including 1) evaluate to true (output as the value 1).
 */
@@ -90,7 +117,8 @@ function applyOp(/* char */ op, /*int*/ b, /*int*/ a){
         case '>':
             return boolToInt(a===0 || (a!==0 && b!==0));
         case '=':
-            return boolToInt((a===0 && b===0) || (a!==0 && b!==0));
+            //return boolToInt((a===0 && b===0) || (a!==0 && b!==0));
+            return boolToInt(a===b);
         case '~':
         case '!':
             return boolToInt(b===0);
