@@ -366,10 +366,8 @@ var solver = (function(){
     };
 }());
 
-
-
-
-/* e.g.
-    solver.printTruthTable("(B&~1)|A");
-    solver.printTruthTable("A | (B & C) | H|E|L|L|O");
-*/
+//For node.js scripts
+/* global process:false */
+if(process && process.argv){
+    solver.auto(process.argv[2]);
+}

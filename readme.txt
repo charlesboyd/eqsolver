@@ -33,4 +33,13 @@ The solver.auto(expression) will evalute the experession provided (if it is vali
 
 Currently, the order of operations must be specified for all logical expressions by using parenthesis: e.g. use 1 | (~0) instead of 1 | ~0.
 
+Node.js example:
+node solver.js "1+1"
+
 TODO: Add public function descriptions, inputs, and outputs.
+
+TODO: Add more examples
+
+Examples:
+solver.printTruthTable("(B&~1)|A");
+solver.printTruthTable("A | (B & C) | H|E|L|L|O");
