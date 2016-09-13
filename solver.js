@@ -9,7 +9,7 @@
    
    See readme.txt for more info.
     
-*/
+*/ 
 
 Array.prototype.peek = function(){
     if(this.length<1){
@@ -350,6 +350,7 @@ var solver = (function(){
         return true;
     }
     
+    /*jslint nomen: true*/
     return {
         evaluate: evaluate,
         printTruthTable: printTruthTable,
@@ -362,12 +363,18 @@ var solver = (function(){
             getAll: getVarStore,
             echoAll: printVarStore,
             reset: resetVarStore
+        },
+        _private:{
+            incVarValues: incVarValues
         }
     };
+    
 }());
 
+/*global process*/
+/*global process:false*/
+
 //For node.js scripts
-/* global process:false */
-if(process && process.argv){
+if(process!==undefined && process && process.argv!==undefined){
     solver.auto(process.argv[2]);
 }

@@ -1,0 +1,40 @@
+{
+  "name": "solver",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.htm",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Charles Boyd <charlesboyd.me>",
+  "license": "None",
+  "dependencies": {
+    "jasmine": "~2.4.1",
+    "karma": "~0.13.22",
+    "jasmine-core": "~2.4.1",
+    "karma-jasmine": "~0.3.8",
+    "karma-chrome-launcher": "~0.2.3",
+    "karma-mocha-reporter": "~2.0.0"
+  },
+  "devDependencies": {
+    "karma-mocha-reporter": "~2.0.0",
+    "phantomjs-prebuilt": "~2.1.7",
+    "karma-phantomjs-launcher": "~1.0.0",
+    "karma-coverage": "~0.5.5"
+  },
+  "jshintConfig": {
+    "predef": [
+      "$",
+      "jQuery",
+      "ActiveXObject",
+      "describe",
+      "it"
+    ],
+    "plusplus": true,
+    "indent": 4,
+    "white": true,
+    "vars": true,
+    "devel": true,
+    "strict": false
+  }
+}
